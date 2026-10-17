@@ -587,14 +587,21 @@ const standalone = () => window.matchMedia("(display-mode: standalone)").matches
 
 (function standaloneHeightFix() {
   const game = $("game");
+  const root = document.documentElement;
   function apply() {
     game.style.height = "";
+    root.style.removeProperty("--sab-fix");
     if (!standalone() || !window.screen || !window.matchMedia("(orientation: portrait)").matches) return;
     const a = window.screen.width, b = window.screen.height;
     if (!a || !b) return;
     const fullH = Math.max(a, b), fullW = Math.min(a, b);
     const gap = fullH - window.innerHeight;
-    if (gap > 15 && gap < 100 && Math.abs(fullW - window.innerWidth) < 2) game.style.height = fullH + "px";
+    if (gap > 15 && gap < 100 && Math.abs(fullW - window.innerWidth) < 2) {
+      game.style.height = fullH + "px";
+
+      const sab = fullW >= 700 ? 20 : gap >= 40 ? 34 : 0;
+      if (sab) root.style.setProperty("--sab-fix", sab + "px");
+    }
   }
 
   const applyAndRefit = () => { apply(); refit(); };

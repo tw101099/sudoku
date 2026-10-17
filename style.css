@@ -262,7 +262,8 @@ h1, h2 { line-height: 1.25; }
 .notes span.x::after { content: ""; position: absolute; left: -10%; right: -10%; top: 50%; height: 2px;
   background: var(--cross); transform: rotate(-35deg); }
 
-.dock { --dock-h: min(12rem, 250px); position: relative; padding: .5rem .75rem calc(.5rem + env(safe-area-inset-bottom));
+.dock { --sab: max(env(safe-area-inset-bottom, 0px), var(--sab-fix, 0px)); }
+.dock { --dock-h: min(12rem, 250px); position: relative; padding: .5rem .75rem calc(.5rem + var(--sab));
 
   background-color: var(--chrome-dock); background-image: var(--paper-panel), linear-gradient(var(--surface), var(--surface));
   border-top: 1px solid var(--line); border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: var(--dock-shadow); }
@@ -313,7 +314,7 @@ h1, h2 { line-height: 1.25; }
   .tools { gap: min(.6rem, 12px); }
   .tools button { min-height: max(56px, min(3.6rem, 80px)); font-size: min(var(--fs-ui), 24px); flex-direction: row; gap: .4rem; }
   .pane { gap: min(.6rem, 12px); max-width: 44rem; }
-  .dock { padding: min(.75rem, 14px) min(1rem, 18px) calc(min(.75rem, 14px) + env(safe-area-inset-bottom)); }
+  .dock { padding: min(.75rem, 14px) min(1rem, 18px) calc(min(.75rem, 14px) + var(--sab)); }
   .dock-msg, .explain-text { font-size: min(var(--fs-lg), 26px); }
   .explain-head { font-size: min(var(--fs-ui), 22px); }
   .dock .btn { font-size: min(var(--fs-ui), 24px); }
