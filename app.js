@@ -1,6 +1,6 @@
 "use strict";
 
-const DEFAULT_SETTINGS = { markErrors: false, hints: false, autoNotes: false, showTimer: true };
+const DEFAULT_SETTINGS = { markErrors: false, hints: false, autoNotes: false, showTimer: false };
 
 function readStore(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
@@ -10,6 +10,11 @@ function writeStore(key, value) {
 }
 const settings = { ...DEFAULT_SETTINGS, ...readStore("sudoku.settings", {}) };
 const saveSettings = () => writeStore("sudoku.settings", settings);
+
+if (!readStore("sudoku.timerDefaultOff", false)) {
+  if (settings.showTimer) { settings.showTimer = false; saveSettings(); }
+  writeStore("sudoku.timerDefaultOff", true);
+}
 
 const banks = {};
 async function loadBank(level) {
@@ -302,7 +307,7 @@ function render() {
   $("back-icon").innerHTML = `<use href="${view ? "#i-close" : "#i-back"}"/>`;
   $("peek").hidden = !!view || !(mode === "play" || mode === "done");
 
-  const timed = play.done && play.started && !play.marked && play.elapsed > 0;
+  const timed = settings.showTimer && play.done && play.started && !play.marked && play.elapsed > 0;
   $("done-msg").textContent = play.done ? `拄拄好！獨獨好！${timed ? `
 用時 ${fmt(play.elapsed)}` : ""}` : "";
   $("mark-done").hidden = play.done;
