@@ -62,7 +62,8 @@
       const d = document.createElement("p");
       d.className = "eggdiag";
       d.textContent = `螢幕 ${s.screenH}・視窗 ${s.innerH}・dvh ${s.dvh}・上 ${s.safeTop}・下 ${s.safeBottom}・` +
-        (s.fixed ? `撐高 缺口 ${s.gap} 補 ${s.sab}` : "未撐高") + `・畫面 ${Math.round(document.getElementById("game").getBoundingClientRect().height) || "-"}`;
+        `可視 ${s.vv}・client ${s.client}・底 ${s.fixedBottom}・` +
+        (s.fixed ? `撐高 缺口 ${s.gap} 補 ${s.sab}` : "未撐高") + `・題目畫面下緣 ${s.gameBottom || "-"}`;
       card.appendChild(d);
     }
     if (sealState !== "dead") {

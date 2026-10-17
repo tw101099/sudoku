@@ -333,6 +333,7 @@ function showHome() {
   for (const d of document.querySelectorAll("dialog[open]")) d.close();
   $("game").hidden = true;
   $("home").hidden = false;
+  document.documentElement.classList.remove("in-game");
   document.title = "獨獨好｜家己的數獨家己解";
   keepAwake(false);
   renderHistory();
@@ -341,6 +342,8 @@ function showHome() {
 function showGame() {
   $("home").hidden = true;
   $("game").hidden = false;
+
+  if (window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true) document.documentElement.classList.add("in-game");
   document.title = `${current.code}・獨獨好`;
   keepAwake(true);
   fitBoard();
@@ -593,6 +596,10 @@ const standalone = () => window.matchMedia("(display-mode: standalone)").matches
   probe.style.cssText = "position:fixed;left:0;top:0;width:0;visibility:hidden;pointer-events:none;" +
     "height:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)";
   document.body.appendChild(probe);
+  const bottomProbe = document.createElement("div");
+  bottomProbe.style.cssText = "position:fixed;left:0;bottom:0;width:0;height:1px;visibility:hidden;pointer-events:none";
+  document.body.appendChild(bottomProbe);
+  new ResizeObserver(() => { const r = game.getBoundingClientRect(); if (r.height && window.__sab) window.__sab.gameBottom = Math.round(r.bottom); }).observe(game);
   const dvhProbe = document.createElement("div");
   dvhProbe.style.cssText = "position:fixed;left:0;top:0;width:0;height:100vh;height:100dvh;visibility:hidden;pointer-events:none";
   document.body.appendChild(dvhProbe);
@@ -602,7 +609,8 @@ const standalone = () => window.matchMedia("(display-mode: standalone)").matches
     const safeTop = probe.offsetHeight - (parseFloat(getComputedStyle(probe).paddingBottom) || 0);
     const safeBottom = parseFloat(getComputedStyle(probe).paddingBottom) || 0;
     const a = window.screen && window.screen.width, b = window.screen && window.screen.height;
-    window.__sab = { innerH: window.innerHeight, screenH: b, dvh: dvhProbe.offsetHeight, safeTop, safeBottom, fixed: false };
+    window.__sab = { innerH: window.innerHeight, screenH: b, dvh: dvhProbe.offsetHeight, client: root.clientHeight,
+      vv: window.visualViewport ? Math.round(window.visualViewport.height) : "-", fixedBottom: Math.round(bottomProbe.getBoundingClientRect().bottom), safeTop, safeBottom, fixed: false };
     if (!standalone() || !a || !b || !window.matchMedia("(orientation: portrait)").matches) return;
     const fullH = Math.max(a, b), fullW = Math.min(a, b);
     const gap = fullH - window.innerHeight;

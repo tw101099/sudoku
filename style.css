@@ -377,6 +377,7 @@ h1, h2 { line-height: 1.25; }
   -webkit-mask-image: url("icons/seal.webp"); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
   mask-image: url("icons/seal.webp"); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
 .egg .eggseal.ok { visibility: visible; }
+html.in-game, html.in-game body { background-color: var(--chrome-dock); }
 .egg .eggdiag { margin: 10px 0 0; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 @supports not ((-webkit-mask-image: none) or (mask-image: none)) { .egg .eggseal { display: none; } }
 @media (prefers-reduced-motion: reduce) { .egg { transition: none; } }
