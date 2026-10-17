@@ -1,8 +1,8 @@
-const CACHE = "sudoku-v22";
+const CACHE = "sudoku-v23";
 const SHELL = [
-  "./", "index.html", "style.css", "codec.js", "steps.js", "explain.js", "app.js", "manifest.webmanifest",
+  "./", "index.html", "style.css", "codec.js", "steps.js", "explain.js", "app.js", "egg.js", "manifest.webmanifest",
   "bank/1.txt", "bank/2.txt", "bank/3.txt", "bank/4.txt", "bank/5.txt", "bank/6.txt",
-  "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/favicon.svg", "icons/favicon-32.png",
+  "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/favicon.svg", "icons/favicon-32.png", "icons/seal.webp",
 ];
 
 self.addEventListener("install", (e) => {
