@@ -20,20 +20,26 @@
     } catch (e) {}
   }
 
-  function fetchTotal() {
-    return fetch(BASE + "/counter/TOTAL.json", { mode: "cors" })
+  function readCount(path) {
+    return fetch(BASE + "/counter/" + encodeURIComponent(path) + ".json", { mode: "cors" })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         const c = j && j.count;
-        if (typeof c === "string" && c.trim()) total = c.trim();
-        else if (typeof c === "number") total = String(c);
-        return total;
+        const n = typeof c === "number" ? c : parseInt(String(c || "").replace(/[^0-9]/g, ""), 10);
+        return isNaN(n) ? null : n;
       })
       .catch(function () { return null; });
   }
+  function fetchTotal() {
+    return Promise.all([readCount("TOTAL"), readCount(location.pathname)]).then(function (ns) {
+      const ok = ns.filter(function (n) { return n !== null; });
+      if (ok.length) total = Math.max.apply(null, ok).toLocaleString("en-US");
+      return total;
+    });
+  }
 
   function countText() {
-    return total ? total + " 個臺灣囡仔的足跡" : FALLBACK;
+    return total ? total + " 個臺灣獨獨好的足跡" : FALLBACK;
   }
 
   function open() {
@@ -56,16 +62,6 @@
     l2.textContent = countText();
     card.appendChild(l1);
     card.appendChild(l2);
-
-    const s = window.__sab;
-    if (s && (window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true)) {
-      const d = document.createElement("p");
-      d.className = "eggdiag";
-      d.textContent = `螢幕 ${s.screenH}・視窗 ${s.innerH}・dvh ${s.dvh}・上 ${s.safeTop}・下 ${s.safeBottom}・` +
-        `可視 ${s.vv}・client ${s.client}・底 ${s.fixedBottom}・` +
-        (s.fixed ? `撐高 缺口 ${s.gap} 補 ${s.sab}` : "未撐高") + `・題目畫面下緣 ${s.gameBottom || "-"}`;
-      card.appendChild(d);
-    }
     if (sealState !== "dead") {
       const seal = document.createElement("span");
       seal.className = sealState === "ok" ? "eggseal ok" : "eggseal";

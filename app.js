@@ -593,34 +593,27 @@ const standalone = () => window.matchMedia("(display-mode: standalone)").matches
   const root = document.documentElement;
 
   const probe = document.createElement("div");
-  probe.style.cssText = "position:fixed;left:0;top:0;width:0;visibility:hidden;pointer-events:none;" +
-    "height:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)";
+  probe.style.cssText = "position:fixed;left:0;top:0;width:0;visibility:hidden;pointer-events:none;height:env(safe-area-inset-top,0px)";
   document.body.appendChild(probe);
-  const bottomProbe = document.createElement("div");
-  bottomProbe.style.cssText = "position:fixed;left:0;bottom:0;width:0;height:1px;visibility:hidden;pointer-events:none";
-  document.body.appendChild(bottomProbe);
-  new ResizeObserver(() => { const r = game.getBoundingClientRect(); if (r.height && window.__sab) window.__sab.gameBottom = Math.round(r.bottom); }).observe(game);
-  const dvhProbe = document.createElement("div");
-  dvhProbe.style.cssText = "position:fixed;left:0;top:0;width:0;height:100vh;height:100dvh;visibility:hidden;pointer-events:none";
-  document.body.appendChild(dvhProbe);
   function apply() {
     game.style.height = "";
     root.style.removeProperty("--sab-fix");
-    const safeTop = probe.offsetHeight - (parseFloat(getComputedStyle(probe).paddingBottom) || 0);
-    const safeBottom = parseFloat(getComputedStyle(probe).paddingBottom) || 0;
+    root.style.removeProperty("--sab-force");
     const a = window.screen && window.screen.width, b = window.screen && window.screen.height;
-    window.__sab = { innerH: window.innerHeight, screenH: b, dvh: dvhProbe.offsetHeight, client: root.clientHeight,
-      vv: window.visualViewport ? Math.round(window.visualViewport.height) : "-", fixedBottom: Math.round(bottomProbe.getBoundingClientRect().bottom), safeTop, safeBottom, fixed: false };
     if (!standalone() || !a || !b || !window.matchMedia("(orientation: portrait)").matches) return;
     const fullH = Math.max(a, b), fullW = Math.min(a, b);
+    if (Math.abs(fullW - window.innerWidth) >= 2) return;
     const gap = fullH - window.innerHeight;
+    const client = root.clientHeight;
+    if (window.innerHeight - client > 15 && window.innerHeight - client < 100) {
 
-    if (gap < 100 && Math.abs(fullW - window.innerWidth) < 2) {
+      game.style.height = client + "px";
+      root.style.setProperty("--sab-force", "0px");
+    } else if (gap > 15 && gap < 100) {
+
       game.style.height = fullH + "px";
-
-      const sab = fullW >= 700 ? 20 : (safeTop >= 40 || gap >= 40) ? 34 : 0;
+      const sab = fullW >= 700 ? 20 : (probe.offsetHeight >= 40 || gap >= 40) ? 34 : 0;
       if (sab) root.style.setProperty("--sab-fix", sab + "px");
-      Object.assign(window.__sab, { fixed: true, gap, sab });
     }
   }
 

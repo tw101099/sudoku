@@ -262,7 +262,7 @@ h1, h2 { line-height: 1.25; }
 .notes span.x::after { content: ""; position: absolute; left: -10%; right: -10%; top: 50%; height: 2px;
   background: var(--cross); transform: rotate(-35deg); }
 
-.dock { --sab: max(env(safe-area-inset-bottom, 0px), var(--sab-fix, 0px)); }
+.dock { --sab: var(--sab-force, max(env(safe-area-inset-bottom, 0px), var(--sab-fix, 0px))); }
 .dock { --dock-h: min(12rem, 250px); position: relative; padding: .5rem .75rem calc(.5rem + var(--sab));
 
   background-color: var(--chrome-dock); background-image: var(--paper-panel), linear-gradient(var(--surface), var(--surface));
@@ -353,7 +353,18 @@ h1, h2 { line-height: 1.25; }
 
   .game { grid-template-rows: auto auto; }
   .dock { overflow: visible; justify-content: flex-start; }
-  .stage { align-self: start; position: sticky; top: 0; height: calc(100vh - 4.5rem); height: calc(100dvh - 4.5rem); }
+  .stage { align-self: start; position: sticky; top: 0; height: calc(100vh - 56px); height: calc(100dvh - 56px - env(safe-area-inset-top)); }
+
+  .game { padding-top: env(safe-area-inset-top); grid-template-columns: minmax(0, 1fr) clamp(260px, 44vw, 400px); }
+  .topbar { min-height: 0; padding: 4px 12px; }
+  .topbar .btn { min-height: 44px; font-size: min(var(--fs-ui), 20px); }
+  .title { display: flex; align-items: baseline; justify-content: center; gap: .5rem; }
+  .code { font-size: min(1.4rem, 26px); }
+  .title-sub { font-size: min(var(--fs-sm), 18px); flex-wrap: nowrap; }
+
+  .digits button { min-height: clamp(44px, 17vh, 76px); }
+  .tools button { min-height: clamp(44px, 13vh, 60px); }
+  .dock > .pane { margin-block: auto; }
 }
 
 .home-top h1 { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
@@ -378,7 +389,6 @@ h1, h2 { line-height: 1.25; }
   mask-image: url("icons/seal.webp"); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
 .egg .eggseal.ok { visibility: visible; }
 html.in-game, html.in-game body { background-color: var(--chrome-dock); }
-.egg .eggdiag { margin: 10px 0 0; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 @supports not ((-webkit-mask-image: none) or (mask-image: none)) { .egg .eggseal { display: none; } }
 @media (prefers-reduced-motion: reduce) { .egg { transition: none; } }
 
