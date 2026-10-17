@@ -56,6 +56,15 @@
     l2.textContent = countText();
     card.appendChild(l1);
     card.appendChild(l2);
+
+    const s = window.__sab;
+    if (s && (window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true)) {
+      const d = document.createElement("p");
+      d.className = "eggdiag";
+      d.textContent = `螢幕 ${s.screenH}・視窗 ${s.innerH}・dvh ${s.dvh}・上 ${s.safeTop}・下 ${s.safeBottom}・` +
+        (s.fixed ? `撐高 缺口 ${s.gap} 補 ${s.sab}` : "未撐高") + `・畫面 ${Math.round(document.getElementById("game").getBoundingClientRect().height) || "-"}`;
+      card.appendChild(d);
+    }
     if (sealState !== "dead") {
       const seal = document.createElement("span");
       seal.className = sealState === "ok" ? "eggseal ok" : "eggseal";

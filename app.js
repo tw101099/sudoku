@@ -588,19 +588,31 @@ const standalone = () => window.matchMedia("(display-mode: standalone)").matches
 (function standaloneHeightFix() {
   const game = $("game");
   const root = document.documentElement;
+
+  const probe = document.createElement("div");
+  probe.style.cssText = "position:fixed;left:0;top:0;width:0;visibility:hidden;pointer-events:none;" +
+    "height:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)";
+  document.body.appendChild(probe);
+  const dvhProbe = document.createElement("div");
+  dvhProbe.style.cssText = "position:fixed;left:0;top:0;width:0;height:100vh;height:100dvh;visibility:hidden;pointer-events:none";
+  document.body.appendChild(dvhProbe);
   function apply() {
     game.style.height = "";
     root.style.removeProperty("--sab-fix");
-    if (!standalone() || !window.screen || !window.matchMedia("(orientation: portrait)").matches) return;
-    const a = window.screen.width, b = window.screen.height;
-    if (!a || !b) return;
+    const safeTop = probe.offsetHeight - (parseFloat(getComputedStyle(probe).paddingBottom) || 0);
+    const safeBottom = parseFloat(getComputedStyle(probe).paddingBottom) || 0;
+    const a = window.screen && window.screen.width, b = window.screen && window.screen.height;
+    window.__sab = { innerH: window.innerHeight, screenH: b, dvh: dvhProbe.offsetHeight, safeTop, safeBottom, fixed: false };
+    if (!standalone() || !a || !b || !window.matchMedia("(orientation: portrait)").matches) return;
     const fullH = Math.max(a, b), fullW = Math.min(a, b);
     const gap = fullH - window.innerHeight;
-    if (gap > 15 && gap < 100 && Math.abs(fullW - window.innerWidth) < 2) {
+
+    if (gap < 100 && Math.abs(fullW - window.innerWidth) < 2) {
       game.style.height = fullH + "px";
 
-      const sab = fullW >= 700 ? 20 : gap >= 40 ? 34 : 0;
+      const sab = fullW >= 700 ? 20 : (safeTop >= 40 || gap >= 40) ? 34 : 0;
       if (sab) root.style.setProperty("--sab-fix", sab + "px");
+      Object.assign(window.__sab, { fixed: true, gap, sab });
     }
   }
 
