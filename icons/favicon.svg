@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- 獨獨好 favicon：紙色圓角方塊＋墨色 3×3 格線＋中央一格茜草紅。由 make_brand.py 產生。 -->
+  <rect width="32" height="32" rx="6" fill="#fdfbf6"/>
+  <g fill="none" stroke="#2a241e">
+    <path d="M12.5 4v26M20.5 4v26M4 12.5h26M4 20.5h26" stroke-width="1"/>
+    <rect x="5" y="5" width="24" height="24" stroke-width="2"/>
+  </g>
+  <rect x="12" y="12" width="9" height="9" fill="#A8463A"/>
+</svg>

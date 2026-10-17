@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>獨獨好｜家己的數獨家己解</title>
+<meta name="description" content="家己的數獨家己解。一鍵出題，抄在紙上寫或直接在螢幕上作答，寫完對答案、看懂每一題的關鍵一步。六種難度，可離線使用。">
+
+<meta name="theme-color" content="#ede8dc">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="獨獨好">
+<script>
+  (function () {
+    var t = "light";
+    try { if (localStorage.getItem("sudoku.theme") === "dark") t = "dark"; } catch (e) {}
+    document.documentElement.setAttribute("data-theme", t);
+  })();
+</script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="獨獨好">
+<meta property="og:title" content="獨獨好｜家己的數獨家己解">
+<meta property="og:description" content="出題、作答、看懂每一步。抄在紙上寫或直接在螢幕上寫，寫完回來對答案，還能一步一步看懂最難的那一招。六種難度。">
+<meta property="og:url" content="https://tw101099.github.io/sudoku/">
+<meta property="og:image" content="https://tw101099.github.io/sudoku/icons/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 2.5h4M12 2.5V6"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20z"/><path d="M13.5 7l3 3"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></symbol>
+  <symbol id="i-erase" viewBox="0 0 24 24"><path d="M9 5h11a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H9l-6-7 6-7z"/><path d="M12 9.5l5 5M17 9.5l-5 5"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2.5M12 20v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M1.5 12H4M20 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></symbol>
+</svg>
+
+<div id="home" class="home">
+  <header class="home-top">
+    <div class="brand-text">
+      <h1>獨獨好</h1>
+      <p class="sub">家己的數獨家己解</p>
+      <p class="sub">出題・作答・看懂每一步</p>
+    </div>
+    <div class="top-icons">
+      <button type="button" id="open-settings" class="icon-btn labeled">
+        <svg class="ic"><use href="#i-gear"/></svg><span>設定</span></button>
+      <button type="button" id="toggle-theme" class="icon-btn labeled">
+        <svg class="ic i-moon"><use href="#i-moon"/></svg><svg class="ic i-sun"><use href="#i-sun"/></svg>
+        <span id="theme-label">暗色</span></button>
+    </div>
+  </header>
+
+  <section class="card" aria-labelledby="h-new">
+    <h2 id="h-new">出新題</h2>
+    <p class="card-hint">先選難度，再按「出一題」。</p>
+    <div class="levels" role="radiogroup" aria-label="難度">
+      <button type="button" role="radio" data-level="1">入門</button>
+      <button type="button" role="radio" data-level="2">簡單</button>
+      <button type="button" role="radio" data-level="3">中等</button>
+      <button type="button" role="radio" data-level="4">困難</button>
+      <button type="button" role="radio" data-level="5">專家</button>
+      <button type="button" role="radio" data-level="6">極限</button>
+    </div>
+    <button type="button" id="new" class="btn primary big">出一題</button>
+  </section>
+
+  <section class="card" aria-labelledby="h-check">
+    <h2 id="h-check">對答案</h2>
+    <form id="lookup" class="lookup">
+      <label for="code-input" class="card-hint">輸入題號</label>
+      <div class="lookup-row">
+        <input id="code-input" autocomplete="off" spellcheck="false" inputmode="numeric" enterkeyhint="go"
+               placeholder="例如 1984">
+        <button type="submit" class="btn primary">打開</button>
+      </div>
+      <p id="lookup-msg" class="msg" role="status"></p>
+    </form>
+  </section>
+
+  <aside id="install-card" class="notice" hidden aria-labelledby="h-install">
+    <svg class="ic notice-ic" aria-hidden="true"><use href="#i-share"/></svg>
+    <div class="notice-body">
+      <h2 id="h-install">小提醒：加到主畫面，用起來像 App</h2>
+      <p id="install-text"></p>
+      <button type="button" id="install-ok" class="btn">知道了</button>
+    </div>
+    <button type="button" id="install-close" class="notice-close" aria-label="關掉這個提醒"><svg class="ic"><use href="#i-close"/></svg></button>
+  </aside>
+
+  <section id="history-wrap" class="card" hidden aria-labelledby="h-history">
+    <h2 id="h-history">最近的題目 <span id="done-count" class="h-count"></span></h2>
+    <ul id="history" class="history"></ul>
+  </section>
+
+  <details class="about">
+    <summary>題號是什麼？難度怎麼分？</summary>
+    <p>每一題都有一組號碼（題號）。把題號記下來，寫完回來在「對答案」輸入同一組題號，就會打開同一題。</p>
+    <p>難度看解題需要的最難技巧：入門和簡單只要找「只剩一個數字能放的格子」，入門的提示數字比較多；
+      中等要多用一點排除；困難要用 X-Wing、Skyscraper 這類技巧；專家需要一連串的推理；極限連推理也很難解開。</p>
+    <p>列是橫的一排，欄是直的一排，宮是粗線框起來的九宮格。</p>
+  </details>
+</div>
+
+<div id="game" class="game" hidden>
+  <header class="topbar">
+    <button type="button" id="back" class="btn ghost back">
+      <svg class="ic" id="back-icon"><use href="#i-back"/></svg><span id="back-label">首頁</span></button>
+    <div class="title">
+      <div id="code" class="code"></div>
+      <div class="title-sub"><span id="level-name"></span>
+        <button type="button" id="timer" class="timer" hidden><svg class="ic sm"><use href="#i-timer"/></svg><span id="timer-text"></span></button></div>
+    </div>
+    <button type="button" id="peek" class="btn ghost peek">看答案</button>
+  </header>
+
+  <div id="stage" class="stage">
+    <div id="board-wrap" class="board-wrap">
+      <svg id="marks" class="marks" viewBox="0 0 9 9" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <div id="board" class="board" role="grid" aria-label="數獨盤面"></div>
+    </div>
+  </div>
+
+  <section id="dock" class="dock" data-mode="play">
+    <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    <div class="pane pane-play">
+      <div class="digits">
+        <button type="button" data-d="1">1</button><button type="button" data-d="2">2</button>
+        <button type="button" data-d="3">3</button><button type="button" data-d="4">4</button>
+        <button type="button" data-d="5">5</button><button type="button" data-d="6">6</button>
+        <button type="button" data-d="7">7</button><button type="button" data-d="8">8</button>
+        <button type="button" data-d="9">9</button>
+        <button type="button" id="erase" class="erase"><svg class="ic"><use href="#i-erase"/></svg><span>擦掉</span></button>
+      </div>
+      <div class="tools">
+        <button type="button" id="note-mode" aria-pressed="false"><svg class="ic"><use href="#i-pencil"/></svg><span>筆記</span></button>
+        <button type="button" id="undo"><svg class="ic"><use href="#i-undo"/></svg><span>復原</span></button>
+        <button type="button" id="hint" hidden><svg class="ic"><use href="#i-bulb"/></svg><span>提示</span></button>
+        <button type="button" id="open-more"><svg class="ic"><use href="#i-more"/></svg><span>更多</span></button>
+      </div>
+    </div>
+
+    <div class="pane pane-check">
+      <p class="dock-msg">寫完了嗎？按下面的按鈕就能看到答案。</p>
+      <button type="button" id="show-answer" class="btn primary big">顯示答案</button>
+      <div class="row2">
+        <button type="button" id="write-here" class="btn">在螢幕上寫</button>
+        <button type="button" id="print-check" class="btn"><svg class="ic"><use href="#i-print"/></svg>列印</button>
+      </div>
+    </div>
+
+    <div class="pane pane-answer">
+      <p class="dock-msg"><b class="ink-answer">紅字</b>是答案，<b class="ink-mine">藍字</b>是你填對的。</p>
+      <button type="button" id="key-step" class="btn primary big"><span>看這題的關鍵一步</span><svg class="ic"><use href="#i-next"/></svg></button>
+      <div class="row2">
+        <button type="button" id="hide-answer" class="btn">隱藏答案</button>
+        <button type="button" id="mark-done" class="btn"><svg class="ic"><use href="#i-check"/></svg>記為完成</button>
+      </div>
+    </div>
+
+    <div class="pane pane-explain">
+      <div class="explain-head"><span id="explain-tech"></span><span id="explain-count"></span></div>
+      <p id="explain-text" class="explain-text"></p>
+      <div class="explain-nav">
+        <button type="button" id="prev-frame" class="btn"><svg class="ic"><use href="#i-back"/></svg><span>上一步</span></button>
+        <button type="button" id="next-frame" class="btn primary"><span id="next-label">下一步</span><svg class="ic"><use id="next-icon" href="#i-next"/></svg></button>
+      </div>
+    </div>
+
+    <div class="pane pane-done">
+      <p id="done-msg" class="done-msg"></p>
+      <button type="button" id="again" class="btn primary big">再來一局</button>
+      <div class="row2">
+        <button type="button" id="done-answer" class="btn">看答案和解說</button>
+        <button type="button" id="done-home" class="btn">回首頁</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="print-head" aria-hidden="true"><span>獨獨好</span><span id="print-date"></span></div>
+  <p class="print-code" aria-hidden="true"><b id="print-code"></b>　<span id="print-level"></span></p>
+  <p class="print-foot" aria-hidden="true" id="print-foot"></p>
+</div>
+
+<dialog id="copy-card" class="sheet">
+  <h2>請記下這組題號</h2>
+  <p id="copy-code" class="copy-code"></p>
+  <p id="copy-text" class="sheet-text"></p>
+  <div class="row2">
+    <button type="button" id="copy-print" class="btn"><svg class="ic"><use href="#i-print"/></svg>列印這題</button>
+    <button type="button" id="copy-ok" class="btn primary">寫好了</button>
+  </div>
+</dialog>
+
+<dialog id="confirm-peek" class="sheet">
+  <h2>還沒寫完，要看答案嗎？</h2>
+  <p class="sheet-text">看了就會知道每一格的答案。你寫的數字都會留著。</p>
+  <div class="row2">
+    <button type="button" id="peek-cancel" class="btn primary">繼續寫</button>
+    <button type="button" id="peek-ok" class="btn">看答案</button>
+  </div>
+</dialog>
+
+<dialog id="more" class="sheet">
+  <h2>更多</h2>
+  <button type="button" class="sheet-item" id="more-print"><svg class="ic"><use href="#i-print"/></svg>列印這一題</button>
+  <button type="button" class="sheet-item" id="more-answer"><svg class="ic"><use href="#i-check"/></svg>看答案</button>
+  <button type="button" class="sheet-item" id="more-timer"><svg class="ic"><use href="#i-timer"/></svg><span id="more-timer-label">隱藏計時</span></button>
+  <button type="button" class="sheet-item" id="more-settings"><svg class="ic"><use href="#i-gear"/></svg>設定</button>
+  <button type="button" class="sheet-item" id="more-home"><svg class="ic"><use href="#i-back"/></svg>回首頁</button>
+  <button type="button" class="btn close-sheet" id="more-close">關閉</button>
+</dialog>
+
+<dialog id="settings" class="sheet">
+  <h2>設定</h2>
+  <label class="switch"><input type="checkbox" data-setting="markErrors">
+    <span><b>填錯標示</b><small>填了和答案不一樣的數字，會變成紅色。</small></span></label>
+  <label class="switch"><input type="checkbox" data-setting="hints">
+    <span><b>提示</b><small>出現「提示」按鈕，告訴你下一步可以怎麼想，不會直接幫你填。</small></span></label>
+  <label class="switch"><input type="checkbox" data-setting="autoNotes">
+    <span><b>自動筆記</b><small>空格自動寫上所有可能的數字。</small></span></label>
+  <label class="switch"><input type="checkbox" id="dark-switch">
+    <span><b>暗色畫面</b><small>晚上看比較不刺眼。</small></span></label>
+  <button type="button" class="btn primary close-sheet" id="settings-close">好</button>
+</dialog>
+
+<script src="codec.js"></script>
+<script src="steps.js"></script>
+<script src="explain.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
