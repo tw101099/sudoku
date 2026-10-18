@@ -449,7 +449,7 @@ window.addEventListener("hashchange", () => {
 
 function showCopyCard() {
   $("copy-code").textContent = current.code;
-  $("copy-text").textContent = `寫完回來，在首頁「對答案」輸入 ${current.code}，就能看到答案。想直接在螢幕上寫也可以。`;
+  $("copy-text").textContent = `寫完回來，在首頁「對答案」輸入 ${current.code}，就能看到答案。`;
   $("copy-card").showModal();
 }
 
@@ -743,6 +743,7 @@ $("done-answer").addEventListener("click", () => setMode("answer"));
 $("done-home").addEventListener("click", goHome);
 
 $("copy-ok").addEventListener("click", () => $("copy-card").close());
+$("copy-screen").addEventListener("click", () => { $("copy-card").close(); setMode("play"); });
 $("copy-print").addEventListener("click", printPuzzle);
 $("peek-cancel").addEventListener("click", () => $("confirm-peek").close());
 $("peek-ok").addEventListener("click", () => { $("confirm-peek").close(); setMode("answer"); });

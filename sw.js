@@ -1,4 +1,4 @@
-const CACHE = "sudoku-v29";
+const CACHE = "sudoku-v30";
 const SHELL = [
   "./", "index.html", "style.css", "codec.js", "steps.js", "explain.js", "app.js", "egg.js", "manifest.webmanifest",
   "bank/1.txt", "bank/2.txt", "bank/3.txt", "bank/4.txt", "bank/5.txt", "bank/6.txt",

@@ -398,12 +398,18 @@ html.in-game, html.in-game body { background-color: var(--chrome-dock); }
 .sheet::backdrop { background: rgb(0 0 0 / .4); }
 .sheet h2 { font-size: var(--fs-lg); margin: 0 0 .75rem; }
 .sheet-text { margin: 0 0 1rem; }
-.copy-code { font-size: 3.2rem; font-weight: 700; letter-spacing: .12em; text-align: center; margin: .25rem 0 .5rem;
+.copy-code { font-size: min(3.2rem, 72px); font-weight: 700; letter-spacing: .12em; text-align: center; margin: .25rem 0 .5rem;
   font-variant-numeric: tabular-nums; }
 .sheet-item { width: 100%; min-height: max(3.5rem, 56px); border: 0; border-top: 1px solid var(--line); background: transparent;
   display: flex; align-items: center; gap: .75rem; padding: .5rem .25rem; font-size: var(--fs-lg); text-align: left; }
 .sheet-item:active { background: var(--chip); }
 .close-sheet { width: 100%; margin-top: .75rem; }
+
+.copy-more { margin-top: min(.6rem, 12px); grid-template-columns: repeat(auto-fit, minmax(min(9.5rem, 100%), 1fr)); }
+#copy-card .btn { font-size: min(var(--fs-ui), 22px); min-height: max(48px, min(3rem, 64px)); }
+#copy-card .btn.big { font-size: min(var(--fs-lg), 24px); }
+#copy-card h2 { font-size: min(var(--fs-lg), 24px); }
+#copy-card .sheet-text { font-size: min(var(--fs-body), 22px); }
 .switch { display: flex; gap: .75rem; align-items: flex-start; padding: .75rem 0; border-top: 1px solid var(--line); cursor: pointer; }
 .switch input { width: 1.6rem; height: 1.6rem; margin: .15rem 0 0; accent-color: var(--accent); flex: none; }
 .switch b { display: block; font-size: var(--fs-ui); }
